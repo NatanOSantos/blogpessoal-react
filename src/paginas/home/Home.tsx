@@ -1,39 +1,23 @@
+import React, { useState, useEffect } from 'react';
 
 function Home() {
+  const [completed, setCompleted] = useState(false);
+  const [tarefa, setTarefa] = useState('');
 
-    return (
-        <>
-            <div style={{ /* primeira div ocupa a tela toda */
-                width: "100vw",
-                display: "flex",
-                justifyContent: "center"
-            }}>
-                <div>
-                    <div style={{ /* Tipo um sub container. Esse sub container vai ter 2 divs, uma dos textos e outra das imagens */
-                        width: "80vw",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                    }}>
-                        <h2>Boas vindas!</h2>
-                        <p>Conte aqui sua experiência:</p>
-                    </div>
-                    <div style={{
-                        width: "80vw",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                    }}>
-                        <img
-                            src="https://i.imgur.com/VpwApCU.png"
-                            alt="Imagem da Página Home"
-                            width="400px"></img>
+  useEffect(() => {
+    if (completed) {
+      setTarefa('Parabéns! Você concluiu a tarefa!');
+    }
+  }, [completed]);
 
-                    </div>
-                </div>
-            </div>
-        </>
-    )
+  return (
+    <div>
+      <h1>Tarefa</h1>
+      <h3>{tarefa}</h3>
+      <p> Clique para Concluir a tarefa</p>
+      <button onClick={() => setCompleted(true)}>Clique para Concluir a tarefa</button>
+    </div>
+  );
 }
 
-export default Home
+export default Home;
