@@ -1,29 +1,52 @@
-import { Link, useNavigate } from 'react-router-dom'
-import React from 'react'
+import { ReactNode, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastAlerts } from "../../utils/ToastAlerts";
+import { AuthContext } from "../contexts/AuthContext";
 
 
 function Navbar() {
- 
-  
+
+  const navigate = useNavigate();
+
+  const { usuario, handleLogout } = useContext(AuthContext)
+
+  let component: ReactNode
+
+  function logout() {
+    handleLogout();
+    ToastAlerts('O usuário foi desconectado com sucesso!', 'sucesso')
+    navigate('/login')
+  }
+
+  if (usuario.token !== "") {
+    component = (
+      <div className='w-full bg-indigo-900 text-white flex justify-center p-5'>
+
+        <div className="container flex justify-between text-lg">
+
+          <Link to='/home' className="text-2xl font-bold hover:text-blue-300">Blog Pessoal</Link>
+
+          <div className="flex gap-4">
+            <Link to='/postagens' className="hover:text-blue-300">Postagens</Link>
+            <Link to='/temas' className="hover:text-blue-300">Temas</Link>
+            <Link to='/cadastroPostagem' className="hover:text-blue-300">Faça sua postagem</Link>
+            <Link to='/cadastrartema' className="hover:text-blue-300">Cadastrar Tema</Link>
+            <Link to='/perfil' className="hover:text-blue-300">Perfil</Link>
+            <Link to='' className="">Login</Link>
+            <Link to='' onClick={logout} className="hover:text-red-300">Sair</Link>
+          </div>
+
+        </div>
+
+      </div>
+    )
+  }
 
   return (
     <>
-     <div className='w-full bg-indigo-900 text-white flex justify-center py-4'>
-          <div className="container flex justify-between text-lg">
-            <div className='text-2xl font-bold uppercase'>Blog Pessoal</div>
-
-            <div className='flex gap-4'>
-              <Link to='/login' className='hover:underline'>Login</Link>
-              <Link to='/home' className='hover:underline'>Home</Link>
-              <div className='hover:underline'>Postagens</div>
-              <div className='hover:underline'>Temas</div>
-              <div className='hover:underline'>Cadastrar tema</div>
-              <div className='hover:underline'>Perfil</div>
-              <div className='hover:underline'>Sair</div>
-            </div>
-          </div>
-        </div>
+      {component}
     </>
+
   )
 }
 
